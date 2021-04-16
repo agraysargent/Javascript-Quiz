@@ -4,16 +4,21 @@ var startQuizPage = document.getElementById("start");
 var startHighScore = document.getElementById("startHighScore");
 var quizBody = document.getElementById("quiz");
 var questionsEl = document.getElementById("questions");
-var resultsEl = document.getElementById("result");
+var feedback = document.getElementById("result");
 var gameoverDiv = document.getElementById("gameOver");
 var scoreContainer = document.getElementById("scoreContainer");
 var highScore = document.getElementById("highScore");
 var scoreName = document.getElementById("scoreName");
+var submitScoreBtn = document.getElementById("submitScoreBtn")
 var endGameBtn = document.getElementById("endGameBtn");
+var scoreDisplayName = document.getElementById("scoreDisplayName");
+var scoreDisplayScore = document.getElementById("scoreDisplayScore");
+var currentQuestionIndex = 0;
 var btnA = document.getElementById("a");
 var btnB = document.getElementById("b");
 var btnC = document.getElementById("c");
-var btnD = document.getElementById("c");
+var btnD = document.getElementById("d");
+var scorePoints = 0; 
 
 // quiz questions: variables: with question itself, choices, and answers 
 
@@ -23,7 +28,7 @@ var quizQuestion = [{
     choiceB: "<script>",
     choiceC: "<scripting>",
     choiceD: "<javascript>",
-    correctAnswer: "B"
+    correctAnswer: "<script>"
 },
 {
     question: "How do we write 'Hello World' in an Alert Box?",
@@ -31,7 +36,7 @@ var quizQuestion = [{
     choiceB: "msg('Hello World')",
     choiceC: "alert('Hello World')",
     choiceD: "msgBox('Hello World')",
-    correctAnswer: "C"
+    correctAnswer: "alert('Hello World')"
 },
 {
     question: "How do we write an IF statement in Javascript?",
@@ -39,7 +44,7 @@ var quizQuestion = [{
     choiceB: "if i = 5",
     choiceC: "if i ==5 then",
     choiceD: "if i = 5 then",
-    correctAnswer: "A"
+    correctAnswer: "if (i==5)"
 },
 {
     question: "Who invented Javascript?",
@@ -47,7 +52,7 @@ var quizQuestion = [{
     choiceB: "Sheryl Sandberg",
     choiceC: "Gary Gygax",
     choiceD: "Brendan Eich",
-    correctAnswer: "D"
+    correctAnswer: "Brendan Eich"
 },
 {
     question: "Javascript is a ___-side programming language.",
@@ -55,7 +60,7 @@ var quizQuestion = [{
     choiceB: "Server",
     choiceC: "Both",
     choiceD: "None",
-    correctAnswer: "C"
+    correctAnswer: "Both"
 },
 {
     question: "How do you find the minimum of x and y using Javascript?",
@@ -63,11 +68,11 @@ var quizQuestion = [{
     choiceB: "Math.min(x,y)",
     choiceC: "Math.min(xy)",
     choiceD: "min(xy)",
-    correctAnswer: "B"
+    correctAnswer: "Math.min(x,y)"
 },
 ];
 
-var finalQuestionTotal = quizQuestions.length;
+var finalQuestionTotal = quizQuestion.length; 
 var currentQuestionTotal = 0;
 var timeLeft = 60;
 var timerInterval;
@@ -81,24 +86,26 @@ function generateQuestion() {
     if (currentQuestionTotal === finalQuestionTotal) {
         return showScore();
     }
-
-    var currentQuestion = quizQuestions[currentQuestionIndex];
+    console.log("generateQuestion")
+    var currentQuestion = quizQuestion[currentQuestionIndex];
+    console.log(currentQuestion)
     questionsEl.innerHTML = "<p>" + currentQuestion.question + "</p>";
-    btnA.innerHTML = currentQuestion.choiceA;
-    btnB.innerHTML = currentQuestion.choiceB;
-    btnC.innerHTML = currentQuestion.choiceC;
-    btnD.innerHTML = currentQuestion.choiceD;
+    btnA.textContent = currentQuestion.choiceA;
+    btnB.textContent = currentQuestion.choiceB;
+    btnC.textContent = currentQuestion.choiceC;
+    btnD.textContent = currentQuestion.choiceD;
 };
 
 // upon starting quiz, the timer begins and will display the inital quiz question
 
 function startQuiz() {
+    console.log("startQuiz")
     gameoverDiv.style.display = "none";
     startQuizPage.style.display = "none";
     generateQuestion();
 
     // how the timer function works
-    timerInterval = setInteral(function () {
+    timerInterval = setInterval(function () {
         timeLeft--;
         quizTimer.textContent = "Time Remaining:" + timeLeft;
 
@@ -126,7 +133,7 @@ submitScoreBtn.addEventListener("click", function score() {
         return false;
     }
     else {
-        var totalScores = JSON.parse(localStorage.getItem("savedScores") || [];
+        var totalScores = JSON.parse(localStorage.getItem("savedScores") || []);
         var currentStudent = scoreInputName.value.trim();
         var currentScore = {
             name: currentStudent,
@@ -145,10 +152,14 @@ submitScoreBtn.addEventListener("click", function score() {
 
 });
 
+startHighScore.addEventListener("click", function(){
+    console.log("startHighScore")
+})
+
 // new function to clear user's local storage to reveal new score list
 function generateScore() {
-    scoreDisplayName.innerHTML = "";
-    scoreDisplayScore.innerHTML = "";
+    scoreDisplayName.textContent = "sldkfjdslfjdsd";
+    scoreDisplayScore.textContent = scorePoints; 
     var highscores = JSON.parse(localStorage.getItem("savedHighScores")) || [];
     for (i = 0; i < highscores.length; i++) {
         var newName = document.createElement("li");
@@ -161,9 +172,9 @@ function generateScore() {
 }
 
 // hides the page while user is viewing scores
-function showScore() {
+function showHighScore() {
     startQuizPage.style.display = "none"
-    gameoverDiv.style.display = "none";
+    gameoverDiv.style.display = "block";
     scoreContainer.style.display = "flex";
     highScore.style.display = "block";
     endGameBtn.style.display = "flex";
@@ -189,22 +200,33 @@ function replayQuiz() {
 
 // function check for each answer
 function checkAnswer(answer) {
-    correct = quizQuestions[currentQuestionIndex].correctAnswer;
-    if (answer === correct && currentQuestionIndex !== finalQuestionTotal){   
-    score++;
+    console.log({ answer })
+    correct = quizQuestion[currentQuestionIndex].correctAnswer;
+    console.log(correct)
+    console.log(currentQuestionIndex)
+    if (answer === correct && currentQuestionIndex !== finalQuestionTotal) {
+        score++;
         alert("That is Correct :)");
+        feedback.textContent = 'the correct answer is ' + correct;
         currentQuestionIndex++;
+        scorePoints+=10; 
         generateQuestion();
         // will reveal correct answer
-    }else if (answer !== correct && currentQuestionTotal !== finalQuestionTotal){
+    } else if (answer !== correct && currentQuestionTotal !== finalQuestionTotal) {
         alert("That is Incorrect :(")
-        currentQuestionTotal++;
-        generateQuestion();
+        feedback.textContent = 'the correct answer is ' + correct;
+            scorePoints--; 
+            currentQuestionIndex++;
+            currentQuestionTotal++;
+            timeLeft-=10; 
+            generateQuestion();
+
+    
         // will reveal that the answer was incorrect
-    }else {
+    } else {
         showScore();
     }
 }
 
 // button to begin the quiz
-startQuizBtn.addEventListener("click", startQuizPage);
+startQuizBtn.addEventListener("click", startQuiz);

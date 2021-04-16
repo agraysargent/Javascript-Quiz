@@ -10,15 +10,15 @@
 
 <body>
     <!-- Content Majority -->
+    <header id="timer">Time Remaining:</header>
     <div class="container">
-        <header id="timer">Time Remaining:</header>
 
         <!-- This is the starting page with button functions -->
-        <div class="start">
+        <div id="start">
             <h2>Ready to test your coding knowledge?</h2>
             <h2>Click start to get started!</h2>
             <button id="startbtn">Start Quiz</button>
-            <button id="startHighScore" onclick="showHighscore()">High Scores</button>
+            <button id="startHighScore" onclick="showHighScore()">High Scores</button>
         </div>
 
         <!-- Quiz ID-->
@@ -28,20 +28,21 @@
         <div id="questions">
             <p>Questions:</p>
         </div>
-        <button id="a" onclick="checkAnswer('a')">A</button>
-        <button id="b" onclick="checkAnswer('b')">B</button>
-        <button id="c" onclick="checkAnswer('c')">C</button>
-        <button id="d" onclick="checkAnswer('d')">D</button>
-        <div id="result"></div>
+        <button id="a" onclick="checkAnswer(document.getElementById('a').textContent)">A</button>
+        <button id="b" onclick="checkAnswer(document.getElementById('b').textContent)">B</button>
+        <button id="c" onclick="checkAnswer(document.getElementById('c').textContent)">C</button>
+        <button id="d" onclick="checkAnswer(document.getElementById('d').textContent)">D</button>
     </div>
+    <div id="result"></div>
 
     <!-- Quiz Completion -->
-    <div id="gameover">
-        <div id=scoreContainer>
+    <div id="gameOver">
+        <div id="scoreContainer">
             <div id="highScore">
                 <div id="scoreHeader">
                     <input type="text" size="40" placeholder="Sign your name for your score!" name="name" id="name" />
                     <button id="enterScore">Enter Score</button>
+                    <button id="submitScoreBtn"></button>
                 </div>
 
                 <div id=entirescoreContainer>
@@ -52,9 +53,15 @@
                         </div>
                         <div id="scoreName">
                         </div>
+                        <div id="scoreDisplayName"></div>
+                        <div id="scoreDisplayScore"></div>
                         <div id="endGameBtn">
                             <button id="tryAgain" onclick="playQuiz()">Try Again!</button>
                         </div>
                         <script src="assets/script.js"></script>
-
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
