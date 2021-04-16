@@ -2,6 +2,8 @@ body {
     background-color:cadetblue;
 }
 
+/* ID styling */
+
 #header {
     position: fixed;
     top: 5px;
@@ -38,7 +40,7 @@ body {
     align-items: center;
 }
 
-#score {
+#highScore {
     height: 1.5rem;
     border: solid 2px;
 }
@@ -62,7 +64,7 @@ body {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#scorepage {
+#scorePage {
     display: none;
     width: 50%;
     border: solid;
@@ -85,6 +87,8 @@ body {
 #endGamebtn {
     display: none;
 }
+
+/* header, p tags and container styling */
 
 h2 {
     margin-top: 1rem;
@@ -115,6 +119,8 @@ li {
     max-width: 90rem;
     margin: 0 auto;
 }
+
+/* button customization and flare */
 
 button {
     display: inline-block;
