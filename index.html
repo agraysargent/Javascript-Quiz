@@ -15,7 +15,7 @@
 
         <!-- This is the starting page with button functions -->
         <div class="start">
-            <h2>Ready to test your knowledge?</h2>
+            <h2>Ready to test your coding knowledge?</h2>
             <h2>Click start to get started!</h2>
             <button id="startbtn">Start Quiz</button>
             <button id="startHighscore" onclick="showHighscore()">High Scores</button>
@@ -23,7 +23,7 @@
 
         <!-- Quiz ID-->
         <div id="quiz"></div>
-        
+
         <!-- Question IDs and buttons -->
         <div id="questions">
             <p>Questions:</p>
@@ -37,23 +37,24 @@
 
     <!-- Quiz Completion -->
     <div id="gameover">
+        <div id=scoreContainer>
+            <div id="Score">
+                <div id="scoreHeader">
+                    <input type="text" size="40" placeholder="Sign your name for your score!" name="name" id="name" />
+                    <button id="enterScore">Enter Score</button>
+                </div>
 
-        <div id="Score">
-            <input type="text" size="40" placeholder="Sign your name for your score!" name="name" id="name" />
-            <button id="enterScore">Enter Score</button>
-        </div>
-
-        <div id=entirescoreContainer>
-            <div id="scorePage">
-                <div id="scoreheader">
-                    <h1>Student Names</h1>
-                    <h3>Score</h3>
-                </div>
-                <div id="scoreName">
-                </div>
-                <div id="endGameBtn">
-                    <button id="tryAgain" onclick="playQuiz()">Try Again!</button>
-                </div>
-                <script src="assets/script.js"></script>
+                <div id=entirescoreContainer>
+                    <div id="scorePage">
+                        <div id="scoreheader">
+                            <h1>Student Names</h1>
+                            <h3>Score</h3>
+                        </div>
+                        <div id="scoreName">
+                        </div>
+                        <div id="endGameBtn">
+                            <button id="tryAgain" onclick="playQuiz()">Try Again!</button>
+                        </div>
+                        <script src="assets/script.js"></script>
 
 </body>
