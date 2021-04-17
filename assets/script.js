@@ -73,7 +73,8 @@ var quizQuestion = [{
 },
 ];
 
-var finalQuestionTotal = quizQuestion.length; 
+// global variables
+var finalQuestionTotal = quizQuestion.length;
 var currentQuestionTotal = 0;
 var timeLeft = 60;
 var timerInterval;
@@ -81,7 +82,6 @@ var score = 0;
 var correct;
 
 // creating function to generate questions and answers
-
 function generateQuestion() {
     if (currentQuestionTotal === finalQuestionTotal) {
         return score();
@@ -122,19 +122,19 @@ function score() {
     quizBody.style.display = "none"
     gameoverDiv.style.display = "flex";
     clearInterval(timerInterval);
-    scorename.value = "";
+    score.value = "";
     score.innerHTML = "You got" + score + " out of " + quizQuestion.length + " correct.";
 }
 
 // by submitting your score this will display your score and previous saved scores
 submitScoreBtn.addEventListener("click", function score() {
-    if (scoreInputName.value === "") {
+    if (score.value === "") {
         alert("Textbox cannnot be empty!");
         return false;
     }
     else {
-        var totalScores = JSON.parse(localStorage.getItem("savedScores") || []);
-        var currentStudent = scoreInputName.value.trim();
+        var totalScores = JSON.parse(localStorage.getItem("savedScore") || []);
+        var currentStudent = score.value.trim();
         var currentScore = {
             name: currentStudent,
             score: totalScores
@@ -146,20 +146,20 @@ submitScoreBtn.addEventListener("click", function score() {
         endGameBtn.style.display = "flex";
 
         totalScores.push(currentStudent);
-        localStorage.setItem("totalScores", JSON.stringify(totalScores));
+        localStorage.setItem("totalScore", JSON.stringify(totalScores));
         generateScore();
     }
 
 });
 
-startHighScore.addEventListener("click", function(){
+startHighScore.addEventListener("click", function () {
     console.log("startHighScore")
 })
 
 // new function to clear user's local storage to reveal new score list
 function generateScore() {
     scoreDisplayName.textContent = "";
-    scoreDisplayScore.textContent = scorePoints; 
+    scoreDisplayScore.textContent = scorePoints;
     var highscores = JSON.parse(localStorage.getItem("savedHighScores")) || [];
     for (i = 0; i < highscores.length; i++) {
         var newName = document.createElement("li");
@@ -200,7 +200,7 @@ function replayQuiz() {
 }
 
 // function check for each answer
-function checkAnswer(answer){
+function checkAnswer(answer) {
     console.log({ answer })
     correct = quizQuestion[currentQuestionIndex].correctAnswer;
     console.log(correct)
@@ -210,17 +210,17 @@ function checkAnswer(answer){
         answerKey.textContent = "That is Correct :)";
         feedback.textContent = 'the correct answer is ' + correct;
         currentQuestionIndex++;
-        scorePoints+=10; 
+        scorePoints += 10;
         generateQuestion();
         // will reveal correct answer
     } else if (answer.toLowerCase() !== correct.toLowerCase() && currentQuestionTotal !== finalQuestionTotal) {
         answerKey.textContent = "That is Incorrect :(";
         feedback.textContent = 'the correct answer is ' + correct;
-            scorePoints--; 
-            currentQuestionIndex++;
-            currentQuestionTotal++;
-            timeLeft-=10; 
-            generateQuestion();
+        scorePoints--;
+        currentQuestionIndex++;
+        currentQuestionTotal++;
+        timeLeft -= 10;
+        generateQuestion();
 
         // will reveal that the answer was incorrect
     } else {
@@ -228,16 +228,16 @@ function checkAnswer(answer){
     }
 }
 
-function btnAResponse(){
+function btnAResponse() {
     checkAnswer(btnA.innerText)
 }
-function btnBResponse(){
+function btnBResponse() {
     checkAnswer(btnB.innerText)
 }
-function btnCResponse(){
+function btnCResponse() {
     checkAnswer(btnC.innerText)
 }
-function btnDResponse(){
+function btnDResponse() {
     checkAnswer(btnD.innerText)
 }
 
