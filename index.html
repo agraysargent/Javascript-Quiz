@@ -26,42 +26,44 @@
 
         <!-- Question IDs and buttons -->
         <div id="questions">
-            <p>Questions:</p>
+            <p id= "question">Questions:</p>
+            <button id="a">A</button>
+            <button id="b">B</button>
+            <button id="c">C</button>
+            <button id="d">D</button>
+            <p id="answerKey"></p>
         </div>
-        <button id="a" onclick="checkAnswer(document.getElementById('a').textContent)">A</button>
-        <button id="b" onclick="checkAnswer(document.getElementById('b').textContent)">B</button>
-        <button id="c" onclick="checkAnswer(document.getElementById('c').textContent)">C</button>
-        <button id="d" onclick="checkAnswer(document.getElementById('d').textContent)">D</button>
-    </div>
-    <div id="result"></div>
 
-    <!-- Quiz Completion -->
-    <div id="gameOver">
-        <div id="scoreContainer">
-            <div id="highScore">
-                <div id="scoreHeader">
-                    <input type="text" size="40" placeholder="Sign your name for your score!" name="name" id="name" />
-                    <button id="enterScore">Enter Score</button>
-                    <button id="submitScoreBtn"></button>
-                </div>
+        <div id="result"></div>
 
-                <div id=entirescoreContainer>
-                    <div id="scorePage">
-                        <div id="scoreHeader">
-                            <h1>Student Names</h1>
-                            <h3>Score</h3>
+        <!-- Quiz Completion -->
+        <div id="gameOver">
+            <div id="scoreContainer">
+                <div id="highScore">
+                    <div id="scoreHeader">
+                        <input type="text" size="40" placeholder="Sign your name for your score!" name="name"
+                            id="name" />
+                        <button id="enterScore">Enter Score</button>
+                        <button id="submitScoreBtn"></button>
+                    </div>
+
+                    <div id=entirescoreContainer>
+                        <div id="scorePage">
+                            <div id="scoreHeader">
+                                <h1>Student Names</h1>
+                                <h3>Score</h3>
+                            </div>
+                            <div id="scoreName">
+                            </div>
+                            <div id="scoreDisplayName"></div>
+                            <div id="scoreDisplayScore"></div>
+                            <div id="endGameBtn">
+                                <button id="tryAgain" onclick="playQuiz()">Try Again!</button>
+                            </div>
+                            <script src="assets/script.js"></script>
                         </div>
-                        <div id="scoreName">
-                        </div>
-                        <div id="scoreDisplayName"></div>
-                        <div id="scoreDisplayScore"></div>
-                        <div id="endGameBtn">
-                            <button id="tryAgain" onclick="playQuiz()">Try Again!</button>
-                        </div>
-                        <script src="assets/script.js"></script>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </body>

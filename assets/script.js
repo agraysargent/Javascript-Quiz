@@ -3,7 +3,7 @@ var startQuizBtn = document.getElementById("startbtn");
 var startQuizPage = document.getElementById("start");
 var startHighScore = document.getElementById("startHighScore");
 var quizBody = document.getElementById("quiz");
-var questionsEl = document.getElementById("questions");
+var questionsEl = document.getElementById("question");
 var feedback = document.getElementById("result");
 var gameoverDiv = document.getElementById("gameOver");
 var scoreContainer = document.getElementById("scoreContainer");
@@ -18,7 +18,8 @@ var btnA = document.getElementById("a");
 var btnB = document.getElementById("b");
 var btnC = document.getElementById("c");
 var btnD = document.getElementById("d");
-var scorePoints = 0; 
+var scorePoints = 0;
+var answerKey = document.querySelector("#answerKey");
 
 // quiz questions: variables: with question itself, choices, and answers 
 
@@ -82,14 +83,13 @@ var correct;
 // creating function to generate questions and answers
 
 function generateQuestion() {
-    gameoverDiv.style.display = "none";
     if (currentQuestionTotal === finalQuestionTotal) {
-        return showScore();
+        return score();
     }
     console.log("generateQuestion")
     var currentQuestion = quizQuestion[currentQuestionIndex];
     console.log(currentQuestion)
-    questionsEl.innerHTML = "<p>" + currentQuestion.question + "</p>";
+    questionsEl.textContent = currentQuestion.question;
     btnA.textContent = currentQuestion.choiceA;
     btnB.textContent = currentQuestion.choiceB;
     btnC.textContent = currentQuestion.choiceC;
@@ -111,7 +111,7 @@ function startQuiz() {
 
         if (timeLeft === 0) {
             clearInterval(timerInterval);
-            showScore();
+            score();
         }
     }, 1000);
     quizBody.style.display = "block";
@@ -147,7 +147,7 @@ submitScoreBtn.addEventListener("click", function score() {
 
         totalScores.push(currentStudent);
         localStorage.setItem("totalScores", JSON.stringify(totalScores));
-        generateshowScore();
+        generateScore();
     }
 
 });
@@ -158,7 +158,7 @@ startHighScore.addEventListener("click", function(){
 
 // new function to clear user's local storage to reveal new score list
 function generateScore() {
-    scoreDisplayName.textContent = "sldkfjdslfjdsd";
+    scoreDisplayName.textContent = "";
     scoreDisplayScore.textContent = scorePoints; 
     var highscores = JSON.parse(localStorage.getItem("savedHighScores")) || [];
     for (i = 0; i < highscores.length; i++) {
@@ -173,11 +173,12 @@ function generateScore() {
 
 // hides the page while user is viewing scores
 function showHighScore() {
-    startQuizPage.style.display = "none"
+    startQuizPage.style.display = "none";
     gameoverDiv.style.display = "block";
     scoreContainer.style.display = "flex";
     highScore.style.display = "block";
     endGameBtn.style.display = "flex";
+    questionsEl.style.display = "none";
 
     generateScore();
 }
@@ -199,21 +200,21 @@ function replayQuiz() {
 }
 
 // function check for each answer
-function checkAnswer(answer) {
+function checkAnswer(answer){
     console.log({ answer })
     correct = quizQuestion[currentQuestionIndex].correctAnswer;
     console.log(correct)
     console.log(currentQuestionIndex)
-    if (answer === correct && currentQuestionIndex !== finalQuestionTotal) {
+    if (answer.toLowerCase() === correct.toLowerCase() && currentQuestionIndex !== finalQuestionTotal) {
         score++;
-        alert("That is Correct :)");
+        answerKey.textContent = "That is Correct :)";
         feedback.textContent = 'the correct answer is ' + correct;
         currentQuestionIndex++;
         scorePoints+=10; 
         generateQuestion();
         // will reveal correct answer
-    } else if (answer !== correct && currentQuestionTotal !== finalQuestionTotal) {
-        alert("That is Incorrect :(")
+    } else if (answer.toLowerCase() !== correct.toLowerCase() && currentQuestionTotal !== finalQuestionTotal) {
+        answerKey.textContent = "That is Incorrect :(";
         feedback.textContent = 'the correct answer is ' + correct;
             scorePoints--; 
             currentQuestionIndex++;
@@ -221,12 +222,28 @@ function checkAnswer(answer) {
             timeLeft-=10; 
             generateQuestion();
 
-    
         // will reveal that the answer was incorrect
     } else {
-        showScore();
+        score();
     }
+}
+
+function btnAResponse(){
+    checkAnswer(btnA.innerText)
+}
+function btnBResponse(){
+    checkAnswer(btnB.innerText)
+}
+function btnCResponse(){
+    checkAnswer(btnC.innerText)
+}
+function btnDResponse(){
+    checkAnswer(btnD.innerText)
 }
 
 // button to begin the quiz
 startQuizBtn.addEventListener("click", startQuiz);
+btnA.addEventListener("click", btnAResponse);
+btnB.addEventListener("click", btnBResponse);
+btnC.addEventListener("click", btnCResponse);
+btnD.addEventListener("click", btnDResponse);
